@@ -36,3 +36,36 @@ const getWallet = async web3 => {
 };
 
 export { getWeb3, getWallet }
+
+/*
+In `client` folder, install a new library to detect Metamask provider: `npm install @metamask/detect-provider`
+In `client/src/utils.js`:
+import detect-provider: `import detectEthereumProvider from '@metamask/detect-provider';`
+Replace getWeb3() function by this one:
+```
+
+const getWeb3 = () =>
+
+new Promise( async (resolve, reject) => {
+
+let provider = await detectEthereumProvider();
+
+if(provider) {
+
+await provider.request({ method: 'eth_requestAccounts' });
+
+try {
+
+const web3 = new Web3(window.ethereum);
+
+resolve(web3);
+
+} catch(error) {
+
+reject(error);
+
+}
+
+} reject('Install Metamask');
+
+});*/ 
